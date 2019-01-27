@@ -1,28 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
 import './App.css';
+import Notes from './Notes';
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      count: 0
+    }
+  }
+  increment = () => {
+    this.props.dispatch({type:'INCREMENT'});
+  }
+  decrement = () => {
+    this.props.dispatch({type:'DECREMENT'});
+  }
+  incrementdua = () => {
+    this.props.dispatch({type:'INCREMENTDUA', plus: 2});
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <center>
+          <Notes/>
+        <div>
+          <button onClick = {this.increment}>Tambah</button>
+          <span></span>
+          <button onClick = {this.incrementdua}>TambahDua</button>
+          <span></span>
+          <button onClick = {this.decrement}>Kurang</button>
+        </div>
+        </center>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return{
+    count: state.count
+  };
+}
+
+export default connect(mapStateToProps)(App);
